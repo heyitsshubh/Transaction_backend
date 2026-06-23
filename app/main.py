@@ -1,12 +1,10 @@
 import os
 from fastapi import FastAPI
 from .database import engine, Base
+from .celery_worker import celery_app 
 from .routers import jobs
 
-# Create tables if not exists
 Base.metadata.create_all(bind=engine)
-
-# Ensure uploads dir exists
 os.makedirs("uploads", exist_ok=True)
 
 app = FastAPI(title="AI-Powered Transaction Processing Pipeline")

@@ -7,7 +7,7 @@ class JobResponse(BaseModel):
     job_id: UUID
 
 class JobStatusResponse(BaseModel):
-    job_id: UUID
+    id: UUID
     status: str
     created_at: datetime
     completed_at: Optional[datetime] = None
@@ -41,7 +41,7 @@ class TransactionSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 class JobResultsResponse(BaseModel):
-    job_id: UUID
+    id: UUID
     status: str
     summary: Optional[JobSummarySchema]
     transactions: List[TransactionSchema]

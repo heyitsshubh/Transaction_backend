@@ -3,7 +3,7 @@ import pandas as pd
 import json
 from datetime import datetime
 from sqlalchemy.orm import Session
-from celery import shared_task
+from .celery_worker import celery_app
 from .database import SessionLocal
 from .models import Job, Transaction, JobSummary
 from .services.llm import classify_transactions_batch, generate_narrative_summary
@@ -27,7 +27,7 @@ def safe_date(val):
     except:
         return None
 
-@shared_task(bind=True)
+@celery_app.task(bind=True)
 def process_job(self, job_id: str):
     db: Session = SessionLocal()
     job = db.query(Job).filter(Job.id == job_id).first()

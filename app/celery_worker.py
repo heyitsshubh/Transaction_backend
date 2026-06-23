@@ -6,8 +6,7 @@ REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
 celery_app = Celery(
     "transaction_pipeline",
     broker=REDIS_URL,
-    backend=REDIS_URL,
-    include=["app.tasks"]
+    backend=REDIS_URL
 )
 
 celery_app.conf.update(
@@ -16,4 +15,5 @@ celery_app.conf.update(
     result_serializer="json",
     timezone="UTC",
     enable_utc=True,
+    imports=["app.tasks"]
 )

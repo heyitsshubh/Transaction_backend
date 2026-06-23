@@ -14,19 +14,14 @@ router = APIRouter()
 def upload_transactions(file: UploadFile = File(...), db: Session = Depends(get_db)):
     if not file.filename.endswith('.csv'):
         raise HTTPException(status_code=400, detail="Only CSV files are allowed.")
-    
-    # Save file
     filepath = os.path.join("uploads", file.filename)
     with open(filepath, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
         
-    # Create Job record
     job = Job(filename=file.filename)
     db.add(job)
     db.commit()
     db.refresh(job)
-    
-    # Trigger Celery Task
     process_job.delay(str(job.id))
     
     return {"job_id": job.id}
@@ -52,7 +47,7 @@ def get_job_results(job_id: str, db: Session = Depends(get_db)):
     summary = db.query(JobSummary).filter(JobSummary.job_id == job_id).first()
     
     return {
-        "job_id": job.id,
+        "id": job.id,
         "status": job.status,
         "summary": summary,
         "transactions": transactions

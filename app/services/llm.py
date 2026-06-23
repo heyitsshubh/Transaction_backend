@@ -3,10 +3,7 @@ import json
 import time
 import google.generativeai as genai
 
-# Configure the API key
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-
-# Use a flash model for fast classification
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 def classify_transactions_batch(transactions_batch, retries=3):
