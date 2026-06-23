@@ -4,7 +4,8 @@ import time
 import google.generativeai as genai
 
 genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-model = genai.GenerativeModel('gemini-1.5-flash')
+# Use a flash model for fast classification
+model = genai.GenerativeModel('gemini-flash-latest')
 
 def classify_transactions_batch(transactions_batch, retries=3):
     """
