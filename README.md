@@ -8,7 +8,7 @@ The system accepts raw, dirty CSV transaction exports, processes them asynchrono
 - **API Framework**: FastAPI
 - **Database**: PostgreSQL
 - **Job Queue**: Celery + Redis
-- **LLM**: Gemini 1.5 Flash (via `google-generativeai`)
+- **LLM**: Gemini-Flash-latest (via `google-generativeai`)
 - **Containerization**: Docker & Docker Compose
 
 ---
